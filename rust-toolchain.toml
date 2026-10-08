@@ -1,0 +1,7 @@
+# Stable. The kit is no_std and builds for a bare target, but nothing here needs
+# nightly: the target ships prebuilt for stable, and the link step is a rustflags
+# link argument (CONTRACT.md hard rule 10). clippy is part of the grade.
+[toolchain]
+channel = "stable"
+targets = ["x86_64-unknown-none"]
+components = ["clippy"]

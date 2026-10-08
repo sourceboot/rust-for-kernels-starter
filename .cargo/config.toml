@@ -1,0 +1,28 @@
+# rust-for-kernels — the course's forced flags (CONTRACT.md "The course's own
+# tests" rule 4; reasoning as rust-for-systems/lab-src/.cargo/config.toml, which
+# this file follows line for line EXCEPT that `-Funsafe_code` is absent: unsafe is
+# this course's subject, and the forced `clippy::undocumented_unsafe_blocks` in the
+# lint run is the contract instead).
+#
+# Ships twice (the learner's repo root and the engine bundle). The engine reads
+# `[build] rustflags`/`rustdocflags` (grader/cargoconfig.go ReadShippedFlags) and
+# sets CARGO_ENCODED_RUSTFLAGS from them on the `course_owned` runs.
+#
+# `-Cpanic=unwind` reaches a bare-target build too when cargo runs from under
+# this file: see CONTRACT.md's appendix for the measured result and the scoping
+# the learner's metal/.cargo/config.toml uses for x86_64-unknown-none.
+[build]
+rustflags = ["--cfg", "clippy", "-Cdebug-assertions=on", "-Cpanic=unwind", "-Coverflow-checks=on"]
+rustdocflags = ["--cfg", "clippy", "-Cdebug-assertions=on", "-Cpanic=unwind", "-Coverflow-checks=on"]
+
+[env]
+CLIPPY_CONF_DIR = { value = ".cargo", relative = true }
+
+# The bare target gets the same list minus `-Cpanic=unwind` (measured: with it,
+# `bare` fails "error: unwinding panics are not supported without std"). A
+# `[target.<triple>] rustflags` replaces `[build] rustflags` for that triple, and
+# merges with the learner's own `[target.x86_64-unknown-none]` table (lab 08's
+# link argument) when cargo runs under both files. The engine reads only `[build]`;
+# no course_owned run builds for this triple.
+[target.x86_64-unknown-none]
+rustflags = ["--cfg", "clippy", "-Cdebug-assertions=on", "-Coverflow-checks=on"]

@@ -1,0 +1,3 @@
+# LAB 08: this file is yours to write.
+#   step 1: an alias, so one short cargo command runs the build tool.
+#   step 2: a table for the bare target that hands the linker your script.

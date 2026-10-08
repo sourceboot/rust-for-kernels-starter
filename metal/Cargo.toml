@@ -1,0 +1,5 @@
+[workspace]
+resolver = "2"
+members = ["kit"]
+# bare targets x86_64-unknown-none and has its own manifest (lab 04).
+exclude = ["bare"]
