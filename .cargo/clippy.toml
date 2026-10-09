@@ -1,44 +1,43 @@
-# The calls this course forbids, read by `cargo clippy` through CLIPPY_CONF_DIR
-# (.cargo/config.toml `[env]`) so it is OUR list, not one a learner's own
-# `clippy.toml` could displace — measured on rust-for-beginners: dropping an empty
+# The calls this course forbids in the kit, read by `cargo clippy` through
+# CLIPPY_CONF_DIR (.cargo/config.toml `[env]`) so it is OUR list, not one a learner's
+# own `clippy.toml` could displace — measured on rust-for-beginners: dropping an empty
 # `disallowed-methods = []` into the learner's tree changes nothing, and removing the
 # CLIPPY_CONF_DIR line makes this file invisible.
 #
-# WHAT IT IS FOR (ported 2026-09-17 from rust-for-beginners, ledger L44). The
-# learner's library is compiled into the course's own test
-# binary, so code inside it runs in the same process as the assertions that grade
-# it. These are the calls that would let that code end the run, replace what it
-# reads, or start something else — change the EVIDENCE rather than the answer.
-# Nothing this course teaches goes near any of them: the reader OPENS a file it is
-# handed (`std::fs::read`, allowed) and parses the bytes; it never writes one, never
-# ends the process and never starts another. The two binaries are `main`s over the
-# library and answer with an `ExitCode`, which is a return value, not a call. The
-# lint reads `--lib` only, so a binary is never in its view; lab 11's course-owned
-# test RUNS the two binaries as child processes instead and grades what they print
-# and how they exit. The lint never reads the learner's own tests either, and the
-# `test` run executes LAST — so a learner test (or a binary lab 11 runs) can rewrite
-# a file a `static` row reads after the compile that produced the evidence. The lint
-# does not have to see that: the engine records every file's hash before the first
-# run and a `static` row passes only on a file that still matches, locally and on the
-# server (ledger L51, closed 2026-09-20). Stated here rather than hidden.
+# WHAT IT IS FOR HERE (rust-for-kernels v2, 2026-10-07; the list is rust-for-systems'
+# and rust-for-beginners', the reasoning is this course's). The kit is `no_std` except
+# under its own test harness, and the course's checks never link it into the test
+# process: every lab's own tests start a child program, the only binary that links the
+# kit, and recompute every expectation themselves. So a kit that ended the process, wrote a file or started
+# a program could only do that to the CHILD, whose early exit the parent reports as a
+# failed run. This list is the second line behind that boundary, not the first: it keeps
+# the kit's host code from reaching for `std::process`/`std::fs` at all — nothing the
+# course teaches goes near them (the kit's `std` is the test harness's, not a
+# dependency) — and it says so to the learner in clippy's own words.
 #
-# `reason` is rendered to the learner verbatim inside clippy's own error, so each
-# one says what the rule protects in plain words — and none of them quotes a
-# check (docs/failure-guidance.md, never echo the rubric).
+# What it does NOT see, stated rather than hidden. The lint run is `-p kit --lib`, so
+# the kit's tests, `bare` and `xtask` are never in its view (`bare` cannot be: it is
+# `no_std` for another triple; `xtask` is lab 08's host tool and runs only under the
+# learner's own `cargo xtask`). And `unsafe` is this course's subject, so there is no
+# `-Funsafe_code` behind this list as there is in rust-for-systems: an `unsafe` route
+# around a name (an `extern "C"` shim, a transmuted pointer) is contained by the process
+# boundary above and by `clippy::undocumented_unsafe_blocks`, forced on the same lint
+# line, which makes every `unsafe` block carry a `// SAFETY:` line a reviewer reads.
+# A check that reads a source file reads the bytes that were compiled, not a file a test
+# rewrote afterwards, so a kit test that edits the tree after the build changes nothing
+# either.
 #
-# NAMES ONLY, deliberately: this list cannot see an `unsafe` route around itself
-# (an `extern "C"` shim in a `#[link_section]`, a transmuted function pointer),
-# which is exactly why `.cargo/config.toml` forbids `unsafe` at the compiler.
-# The two are one gate, and the lint half is the weaker one.
+# `reason` is rendered to the learner verbatim inside clippy's own error, so each one
+# says what the rule protects in plain words — and none of them quotes a check (a hint
+# never echoes a rubric).
 #
-# `allow-invalid = true` on the platform-specific paths: `std::os::windows::…`
-# does not resolve on a Mac and `std::os::unix::…` does not resolve on Windows,
-# and without it clippy fails on the path it cannot find rather than on the call
-# it was asked to catch.
+# `allow-invalid = true` on the platform-specific paths: `std::os::windows::…` does not
+# resolve on a Mac and `std::os::unix::…` does not resolve on Windows, and without it
+# clippy fails on the path it cannot find rather than on the call it was asked to catch.
 #
-# `std::process::Command::new` alone covers the whole Command family: it is the
-# only constructor, so `.spawn()`, `.output()`, `.status()` and `CommandExt::exec`
-# all need it first.
+# `std::process::Command::new` alone covers the whole Command family: it is the only
+# constructor, so `.spawn()`, `.output()`, `.status()` and `CommandExt::exec` all need
+# it first.
 
 disallowed-methods = [
   { path = "std::process::exit", reason = "a test run must end when its tests end" },

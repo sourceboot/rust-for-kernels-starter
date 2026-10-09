@@ -49,8 +49,8 @@ already have the tree, so you don't need it.
 sboot start rust-for-kernels
 ```
 
-materialises this same tree into `./kernel-kit-sb/` — named after what you
-build rather than after the course — makes it a git repository and commits it,
+materialises this same tree into `./sourceboot-rust-for-kernels/` — named after the
+course — makes it a git repository and commits it,
 asking once for the name and email git stamps on your commits. No `gh` and no
 template involved; `--dir <name>` picks a different folder. When you want it on
 GitHub, `sboot repo` creates the private repo and pushes it.
