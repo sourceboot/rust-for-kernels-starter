@@ -22,7 +22,11 @@ CLIPPY_CONF_DIR = { value = ".cargo", relative = true }
 # `bare` fails "error: unwinding panics are not supported without std"). A
 # `[target.<triple>] rustflags` replaces `[build] rustflags` for that triple, and
 # merges with the learner's own `[target.x86_64-unknown-none]` table (lab 08's
-# link argument) when cargo runs under both files. The engine reads only `[build]`;
-# no course_owned run builds for this triple.
+# link argument) when cargo runs under both files. The engine reads only `[build]`.
+# Lab 07's `lint-bare` is a course_owned run for this triple (2026-10-25, G710):
+# CARGO_ENCODED_RUSTFLAGS wins over this table, so it builds with `-Cpanic=unwind` —
+# measured to finish for a LIBRARY (clippy and an rlib build); it is a bare BINARY
+# that the flag breaks, so lab 08's `bare` stays off it. Lab 07's `bare-pins` is not
+# course-owned and builds under this table, as `target-build` does.
 [target.x86_64-unknown-none]
 rustflags = ["--cfg", "clippy", "-Cdebug-assertions=on", "-Coverflow-checks=on"]
