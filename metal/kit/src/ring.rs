@@ -5,6 +5,11 @@
 //! are yours too: each name is one lab 06 asks for, and each body waits for
 //! the task that writes it.
 
+#[allow(unused_imports)]
+use crate::handoff::{BootInfo, Full, MemRegion, RegionKind};
+#[allow(unused_imports)]
+use crate::sync::SpinLock;
+
 #[cfg(test)]
 mod tests {
     #[allow(unused_imports)]

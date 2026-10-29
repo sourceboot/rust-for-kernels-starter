@@ -26,7 +26,8 @@ CLIPPY_CONF_DIR = { value = ".cargo", relative = true }
 # Lab 07's `lint-bare` is a course_owned run for this triple (2026-10-25, G710):
 # CARGO_ENCODED_RUSTFLAGS wins over this table, so it builds with `-Cpanic=unwind` —
 # measured to finish for a LIBRARY (clippy and an rlib build); it is a bare BINARY
-# that the flag breaks, so lab 08's `bare` stays off it. Lab 07's `bare-pins` is not
-# course-owned and builds under this table, as `target-build` does.
+# that the flag breaks, so lab 08's `bare` stays off it. Lab 07's `bare-pins` (the
+# course's own rlib) is course-owned too since 2026-10-26 and builds the same
+# way; `target-build` is not, and builds under this table.
 [target.x86_64-unknown-none]
 rustflags = ["--cfg", "clippy", "-Cdebug-assertions=on", "-Coverflow-checks=on"]

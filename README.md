@@ -6,8 +6,8 @@ there is no operating system under the program. You lay a struct out byte for by
 so another program can hand it over, reach through raw pointers and volatile
 registers on purpose, share state with no `static mut`, print with no heap, queue
 without allocating, write one instruction by hand, and build the build for a target
-with nothing under it. Every piece goes into one crate, `kit`, and the last labs link
-it into a freestanding binary.
+with nothing under it. Every piece goes into one crate, `kit`, and from lab 04 on a
+freestanding binary links it.
 
 Nothing here starts a virtual machine: every lab runs on your own computer, as
 ordinary tests and a cross-build.
@@ -60,7 +60,7 @@ GitHub, `sboot repo` creates the private repo and pushes it.
 ```
 metal/                  the cargo workspace you own
   kit/                  the library you write, one module per lab — `no_std`
-                        from its first line
+                        at the top of lib.rs, below its `//!` line
     src/                handoff, raw, sync, print, ring, arch and registry:
                         each file holds its lab's test names over `todo!()`
                         bodies, and lib.rs declares a module when its lab

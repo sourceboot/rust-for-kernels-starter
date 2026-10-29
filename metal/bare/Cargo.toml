@@ -1,4 +1,4 @@
-# LAB 04: this crate's manifest is yours to write.
-#   step 1: a [package] section naming the crate.
-#   step 2: a dependency on the kit, by path.
-#   step 3: a panic strategy for both profiles that needs no unwinder.
+# LAB 04 task 1: this crate's manifest is yours to write.
+#   a [package] section naming the crate.
+#   a dependency on the kit, by path.
+#   a panic strategy for both profiles that needs no unwinder.

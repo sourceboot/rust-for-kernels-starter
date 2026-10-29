@@ -5,6 +5,9 @@
 //! are yours too: each name is one lab 02 asks for, and each body waits for
 //! the task that writes it.
 
+#[allow(unused_imports)]
+use crate::handoff::{BootInfo, MemRegion, BOOT_MAGIC};
+
 #[cfg(test)]
 mod tests {
     #[allow(unused_imports)]

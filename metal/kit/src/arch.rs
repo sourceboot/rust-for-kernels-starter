@@ -5,6 +5,16 @@
 //! are yours too: each name is one lab 07 asks for, and each body waits for
 //! the task that writes it.
 
+#[allow(unused_imports)]
+use core::arch::asm;
+#[allow(unused_imports)]
+use core::sync::atomic::{AtomicU64, Ordering};
+
+#[allow(unused_imports)]
+use crate::handoff::Full;
+#[allow(unused_imports)]
+use crate::sync::SpinLock;
+
 #[cfg(test)]
 mod tests {
     #[allow(unused_imports)]

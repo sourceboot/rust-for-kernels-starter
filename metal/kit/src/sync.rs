@@ -5,6 +5,16 @@
 //! are yours too: each name is one lab 03 asks for, and each body waits for
 //! the task that writes it.
 
+#[allow(unused_imports)]
+use core::cell::UnsafeCell;
+#[allow(unused_imports)]
+use core::ops::{Deref, DerefMut};
+#[allow(unused_imports)]
+use core::sync::atomic::{AtomicBool, AtomicU64, Ordering};
+
+#[allow(unused_imports)]
+use crate::raw::Bump;
+
 #[cfg(test)]
 mod tests {
     #[allow(unused_imports)]

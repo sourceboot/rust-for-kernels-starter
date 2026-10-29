@@ -5,6 +5,9 @@
 //! are yours too: each name is one lab 01 asks for, and each body waits for
 //! the task that writes it.
 
+#[allow(unused_imports)]
+use core::mem::size_of;
+
 #[cfg(test)]
 mod tests {
     #[allow(unused_imports)]
